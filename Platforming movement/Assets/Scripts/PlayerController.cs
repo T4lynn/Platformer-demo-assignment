@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Rigidbody2D rb;
     public enum FacingDirection
     {
         left, right
@@ -16,16 +17,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // The input from the player needs to be determined and
-        // then passed in the to the MovementUpdate which should
-        // manage the actual movement of the character.
-        Vector2 playerInput = new Vector2();
+        //determines what the movement input is, and assigns it to movementControl. 
+        float movementControl = Input.GetAxis("Horizontal");
+        // sets a new vector which the horizontal input float as the x value. 
+        Vector2 playerInput = new Vector2(movementControl, 0);
+        //calls movementUpdate with the previously defined vector.
         MovementUpdate(playerInput);
     }
 
     private void MovementUpdate(Vector2 playerInput)
     {
-
+        // wrote a debug.log when troubleshooting, to determine whether the
+        //problem was addforce or input.getaxis. 
+        //Debug.Log("direction:" +  playerInput);
+        //adds a force in the direction indicated by movement control, using a constant force. 
+        rb.AddForce(playerInput, ForceMode2D.Force);
     }
 
     public bool IsWalking()
