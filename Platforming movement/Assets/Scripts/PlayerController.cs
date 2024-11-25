@@ -31,9 +31,10 @@ public class PlayerController : MonoBehaviour
         Vector2 playerInput = new Vector2(speedModifier * movementControl, 0);
         //calls movementUpdate with the previously defined vector.
         MovementUpdate(playerInput);
-        Vector2 groundedSensor = new Vector2(rb.transform.position.x, rb.transform.position.y - 0.7f);
-       hit = Physics2D.Linecast(rb.transform.position, groundedSensor);
-        //Debug.DrawLine(rb.transform.position, groundedSensor);
+       Vector2 groundedSensorEnd = new Vector2(rb.transform.position.x, rb.transform.position.y - 1f);
+        Vector2 groundedSensorStart = new Vector2(rb.transform.position.x, rb.transform.position.y - 0.7f);
+       hit = Physics2D.Linecast(groundedSensorStart, groundedSensorEnd);
+        Debug.DrawLine(groundedSensorStart, groundedSensorEnd);
     }
 
     private void MovementUpdate(Vector2 playerInput)
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         if (hit) { Debug.Log("hit!"); return true; }
-        if (!hit) { return false; }
+        if (!hit) { Debug.Log("Not Hit!"); return false; }
         else { return false; }
     }
 
